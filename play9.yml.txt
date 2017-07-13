@@ -1,0 +1,63 @@
+
+Skip to content
+This repository
+
+    Pull requests
+    Issues
+    Marketplace
+    Gist
+
+    @collinsorighose
+
+1
+0
+
+    0
+
+collinsorighose/Ansible_Training
+Code
+Issues 0
+Pull requests 0
+Projects 0
+Wiki
+Settings
+Ansible_Training/example9.yml
+00a56f2 on 7 Jun
+root First Commit
+32 lines (30 sloc) 760 Bytes
+---
+#This people with them plenty wahala sef
+#Wetin dem plan to achieve with this them jara?
+#Handlers are triggered by a "notify"
+
+- include: example5.yml Our_Required_app_name=httpd
+- hosts: webservers
+  vars: 
+     demo_message: 'Hello World (of course)'
+  handlers:
+  - name: print-or-not
+    debug: msg='Message is {{demo_message}}'
+  - name: start-httpd
+    service: state=started name=httpd
+    sudo: yes
+  - name: stop-httpd
+    service: state=stopped name=httpd
+    sudo: yes
+  - name: fizz
+    debug: msg='fizz'
+  - name: buzz
+    debug: msg='fuzz'
+  tasks:
+  - name: show something special
+    shell: echo "This is a debugging task. What happens when it ends?"
+    notify:
+    - start-httpd
+    - print-or-not
+    - buzz
+    - fizz
+    - stop-httpd
+
+    Contact GitHub API Training Shop Blog About 
+
+    © 2017 GitHub, Inc. Terms Privacy Security Status Help 
+
